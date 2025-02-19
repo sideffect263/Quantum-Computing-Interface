@@ -31,6 +31,11 @@ app.get('/', (req, res) => {
   res.render('index', { cssFile: 'styles/tailwind.css' });
 });
 
+// Serve the About page
+app.get('/about', (req, res) => {
+  res.render('about');
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);

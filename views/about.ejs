@@ -1,0 +1,191 @@
+<!-- views/about.ejs -->
+<%- include('./partials/header') %>
+
+<div class="min-h-screen">
+  <!-- Hero Section with Animated Background -->
+  <section class="relative overflow-hidden py-20 bg-gradient-to-b from-gray-900 to-gray-800">
+    <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
+    
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16">
+        <h1 class="text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+          Exploring the Quantum Frontier
+        </h1>
+        <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+          Where classical computing meets quantum possibilities, empowering developers to experiment with cutting-edge quantum algorithms and cryptography.
+        </p>
+      </div>
+
+      <!-- Animated Feature Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+        <div class="transform hover:-translate-y-2 transition-all duration-300">
+          <div class="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700 h-full">
+            <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-4">
+              <i class="fas fa-atom text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">Quantum Circuits</h3>
+            <p class="text-gray-400">Create and experiment with quantum circuits using our intuitive interface. Perfect for both beginners and advanced users.</p>
+          </div>
+        </div>
+
+        <div class="transform hover:-translate-y-2 transition-all duration-300">
+          <div class="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700 h-full">
+            <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mb-4">
+              <i class="fas fa-lock text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">Cryptography Tools</h3>
+            <p class="text-gray-400">Explore quantum-safe cryptography with our implementation of cutting-edge algorithms and protocols.</p>
+          </div>
+        </div>
+
+        <div class="transform hover:-translate-y-2 transition-all duration-300">
+          <div class="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700 h-full">
+            <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mb-4">
+              <i class="fas fa-chart-line text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">Performance Analysis</h3>
+            <p class="text-gray-400">Measure and visualize the performance of quantum algorithms with our comprehensive testing tools.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Demo Section -->
+  <section class="py-20 bg-gray-900">
+    <div class="container mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div class="space-y-6">
+          <h2 class="text-3xl font-bold">Interactive Learning</h2>
+          <p class="text-gray-400">Our platform provides hands-on experience with:</p>
+          <ul class="space-y-4">
+            <li class="flex items-center space-x-3">
+              <span class="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center">
+                <i class="fas fa-check text-blue-500"></i>
+              </span>
+              <span>Quantum Circuit Design & Simulation</span>
+            </li>
+            <li class="flex items-center space-x-3">
+              <span class="w-8 h-8 bg-purple-500/20 rounded-full flex items-center justify-center">
+                <i class="fas fa-check text-purple-500"></i>
+              </span>
+              <span>Real-time Performance Metrics</span>
+            </li>
+            <li class="flex items-center space-x-3">
+              <span class="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center">
+                <i class="fas fa-check text-green-500"></i>
+              </span>
+              <span>Advanced Cryptography Protocols</span>
+            </li>
+          </ul>
+        </div>
+        <div class="relative">
+          <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 transform rotate-2 hover:rotate-0 transition-transform duration-300">
+            <pre class="text-sm text-gray-300 overflow-x-auto">
+<code>// Example Quantum Circuit
+const circuit = new QuantumCircuit(2);
+circuit.h(0);    // Hadamard gate
+circuit.cx(0,1); // CNOT gate
+circuit.measure(0,0);
+circuit.measure(1,1);</code>
+            </pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Goals Section -->
+  <section class="py-20 bg-gradient-to-b from-gray-900 to-gray-800">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl font-bold text-center mb-12">Our Mission</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="bg-gray-800/50 rounded-lg p-6 border border-gray-700 backdrop-blur-sm">
+          <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4">
+            <i class="fas fa-graduation-cap text-blue-500 text-xl"></i>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">Education</h3>
+          <p class="text-gray-400">Make quantum computing accessible to developers of all skill levels.</p>
+        </div>
+        
+        <div class="bg-gray-800/50 rounded-lg p-6 border border-gray-700 backdrop-blur-sm">
+          <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4">
+            <i class="fas fa-flask text-purple-500 text-xl"></i>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">Innovation</h3>
+          <p class="text-gray-400">Push the boundaries of quantum computing and cryptography research.</p>
+        </div>
+        
+        <div class="bg-gray-800/50 rounded-lg p-6 border border-gray-700 backdrop-blur-sm">
+          <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mb-4">
+            <i class="fas fa-users text-green-500 text-xl"></i>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">Community</h3>
+          <p class="text-gray-400">Build a collaborative environment for quantum computing enthusiasts.</p>
+        </div>
+        
+        <div class="bg-gray-800/50 rounded-lg p-6 border border-gray-700 backdrop-blur-sm">
+          <div class="w-12 h-12 bg-red-500/20 rounded-lg flex items-center justify-center mb-4">
+            <i class="fas fa-shield-alt text-red-500 text-xl"></i>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">Security</h3>
+          <p class="text-gray-400">Advance the field of quantum-safe cryptography.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 bg-gray-900">
+    <div class="container mx-auto px-6 text-center">
+      <h2 class="text-3xl font-bold mb-6">Ready to Start Your Quantum Journey?</h2>
+      <p class="text-gray-400 mb-8 max-w-2xl mx-auto">Join us in exploring the fascinating world of quantum computing and cryptography.</p>
+      <div class="flex justify-center space-x-4">
+        <button class="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg transition-colors duration-300">
+          Get Started
+        </button>
+        <button class="border border-gray-600 hover:border-gray-500 px-8 py-3 rounded-lg transition-colors duration-300">
+          View Documentation
+        </button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+.bg-grid-pattern {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Add animation classes to elements as they scroll into view
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-float');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  // Observe all feature cards
+  document.querySelectorAll('.transform').forEach(card => {
+    observer.observe(card);
+  });
+});
+</script>
+
+<%- include('./partials/footer') %>
