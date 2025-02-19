@@ -1,5 +1,3 @@
-const crypto = require('crypto');
-
 exports.diffieHellmanKeyExchange = (req, res) => {
   try {
     const { prime, generator, privateKey, otherPublicKey } = req.body;
@@ -9,11 +7,11 @@ exports.diffieHellmanKeyExchange = (req, res) => {
     // Start timing
     const startTime = process.hrtime();
 
-    // Convert all inputs to BigInt
-    const p = BigInt(prime);
-    const g = BigInt(generator);
-    const privateKeyNum = BigInt(privateKey);
-    const otherPublicKeyNum = BigInt(otherPublicKey);
+    // Convert all inputs to numbers
+    const p = parseInt(prime, 10);
+    const g = parseInt(generator, 10);
+    const privateKeyNum = parseInt(privateKey, 10);
+    const otherPublicKeyNum = parseInt(otherPublicKey, 10);
 
     // Validate inputs
     if (!isPrime(p)) {
@@ -40,21 +38,21 @@ exports.diffieHellmanKeyExchange = (req, res) => {
     const totalTime = getElapsedMs(startTime);
 
     // Calculate bit lengths for analysis
-    const primeBitLength = p.toString(2).length;
-    const computationalComplexity = `O(log²(n)) ≈ ${Math.pow(Math.log2(Number(p)), 2).toFixed(2)} operations`;
+    const primeBitLength = Math.floor(Math.log2(p)) + 1;
+    const computationalComplexity = `O(log²(n)) ≈ ${Math.pow(Math.log2(p), 2).toFixed(2)} operations`;
 
     res.status(200).json({
       status: 'success',
       inputs: {
-        prime: p.toString(),
-        generator: g.toString(),
-        privateKey: privateKeyNum.toString(),
-        otherPublicKey: otherPublicKeyNum.toString(),
+        prime: p,
+        generator: g,
+        privateKey: privateKeyNum,
+        otherPublicKey: otherPublicKeyNum,
         primeBitLength
       },
       results: {
-        publicKey: publicKey.toString(),
-        sharedSecret: sharedSecret.toString()
+        publicKey: publicKey,
+        sharedSecret: sharedSecret
       },
       performance: {
         publicKeyCalculationTime: publicKeyTime,
@@ -78,61 +76,36 @@ function getElapsedMs(startTime) {
   return (seconds * 1000 + nanoseconds / 1000000).toFixed(3);
 }
 
-// Modular exponentiation with BigInt support
+// Modular exponentiation with performance optimizations
 function modPow(base, exponent, modulus) {
-  if (modulus === 1n) return 0n;
+  if (modulus === 1) return 0;
   
-  let result = 1n;
+  let result = 1;
   base = base % modulus;
   
-  while (exponent > 0n) {
-    if (exponent % 2n === 1n) {
+  while (exponent > 0) {
+    if (exponent % 2 === 1) {
       result = (result * base) % modulus;
     }
     base = (base * base) % modulus;
-    exponent = exponent / 2n;
+    exponent = Math.floor(exponent / 2);
   }
   
   return result;
 }
 
-// Optimized primality test for BigInt
 function isPrime(num) {
-  if (num <= 1n) return false;
-  if (num <= 3n) return true;
-  if (num % 2n === 0n || num % 3n === 0n) return false;
+  if (num <= 1) return false;
+  if (num <= 3) return true;
+  if (num % 2 === 0 || num % 3 === 0) return false;
   
-  let i = 5n;
-  while (i * i <= num) {
-    if (num % i === 0n || num % (i + 2n) === 0n) return false;
-    i += 6n;
+  for (let i = 5; i * i <= num; i += 6) {
+    if (num % i === 0 || num % (i + 2) === 0) return false;
   }
   return true;
 }
 
 function isValidGenerator(g, p) {
-  if (g < 2n || g >= p) return false;
-  
-  // Additional check for generator validity
-  const factors = [2n];
-  const phi = p - 1n;
-  
-  // Simple factor check for p-1
-  for (let i = 3n; i * i <= phi; i += 2n) {
-    if (phi % i === 0n) {
-      factors.push(i);
-      if (i * i !== phi) {
-        factors.push(phi / i);
-      }
-    }
-  }
-  
-  // Check if g is a valid generator
-  for (const factor of factors) {
-    if (modPow(g, phi / factor, p) === 1n) {
-      return false;
-    }
-  }
-  
+  if (g < 2 || g >= p) return false;
   return true;
 }
