@@ -7,11 +7,11 @@ exports.diffieHellmanKeyExchange = (req, res) => {
     // Start timing
     const startTime = process.hrtime();
 
-    // Convert all inputs to numbers
-    const p = parseInt(prime, 10);
-    const g = parseInt(generator, 10);
-    const privateKeyNum = parseInt(privateKey, 10);
-    const otherPublicKeyNum = parseInt(otherPublicKey, 10);
+    // Convert all inputs to BigInt
+    const p = BigInt(prime);
+    const g = BigInt(generator);
+    const privateKeyNum = BigInt(privateKey);
+    const otherPublicKeyNum = BigInt(otherPublicKey);
 
     // Validate inputs
     if (!isPrime(p)) {
@@ -38,21 +38,21 @@ exports.diffieHellmanKeyExchange = (req, res) => {
     const totalTime = getElapsedMs(startTime);
 
     // Calculate bit lengths for analysis
-    const primeBitLength = Math.floor(Math.log2(p)) + 1;
-    const computationalComplexity = `O(log²(n)) ≈ ${Math.pow(Math.log2(p), 2).toFixed(2)} operations`;
+    const primeBitLength = Math.floor(Math.log2(Number(p))) + 1;
+    const computationalComplexity = `O(log²(n)) ≈ ${Math.pow(Math.log2(Number(p)), 2).toFixed(2)} operations`;
 
     res.status(200).json({
       status: 'success',
       inputs: {
-        prime: p,
-        generator: g,
-        privateKey: privateKeyNum,
-        otherPublicKey: otherPublicKeyNum,
+        prime: p.toString(),
+        generator: g.toString(),
+        privateKey: privateKeyNum.toString(),
+        otherPublicKey: otherPublicKeyNum.toString(),
         primeBitLength
       },
       results: {
-        publicKey: publicKey,
-        sharedSecret: sharedSecret
+        publicKey: publicKey.toString(),
+        sharedSecret: sharedSecret.toString()
       },
       performance: {
         publicKeyCalculationTime: publicKeyTime,
@@ -78,34 +78,34 @@ function getElapsedMs(startTime) {
 
 // Modular exponentiation with performance optimizations
 function modPow(base, exponent, modulus) {
-  if (modulus === 1) return 0;
+  if (modulus === 1n) return 0n;
   
-  let result = 1;
+  let result = 1n;
   base = base % modulus;
   
-  while (exponent > 0) {
-    if (exponent % 2 === 1) {
+  while (exponent > 0n) {
+    if (exponent % 2n === 1n) {
       result = (result * base) % modulus;
     }
     base = (base * base) % modulus;
-    exponent = Math.floor(exponent / 2);
+    exponent = exponent / 2n;
   }
   
   return result;
 }
 
 function isPrime(num) {
-  if (num <= 1) return false;
-  if (num <= 3) return true;
-  if (num % 2 === 0 || num % 3 === 0) return false;
+  if (num <= 1n) return false;
+  if (num <= 3n) return true;
+  if (num % 2n === 0n || num % 3n === 0n) return false;
   
-  for (let i = 5; i * i <= num; i += 6) {
-    if (num % i === 0 || num % (i + 2) === 0) return false;
+  for (let i = 5n; i * i <= num; i += 6n) {
+    if (num % i === 0n || num % (i + 2n) === 0n) return false;
   }
   return true;
 }
 
 function isValidGenerator(g, p) {
-  if (g < 2 || g >= p) return false;
+  if (g < 2n || g >= p) return false;
   return true;
 }
