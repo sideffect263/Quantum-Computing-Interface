@@ -38,10 +38,12 @@
 </div>
 
 <script type="module">
-import { initializePerformanceChart } from '/public/js/chart.js';
+import { initializePerformanceChart, initializeKeySizeChart, initializeComplexityChart } from '/js/chart.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     initializePerformanceChart();
+    initializeKeySizeChart();
+    initializeComplexityChart();
 });
 </script>
 

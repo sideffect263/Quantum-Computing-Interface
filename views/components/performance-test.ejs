@@ -133,6 +133,18 @@
             `
         }) %>
 
+        <!-- Performance Chart -->
+        <%- include('../partials/card', {
+            title: 'Performance Chart',
+            icon: 'fas fa-chart-line',
+            iconColor: 'blue',
+            content: `
+            <div class="h-64">
+                <canvas id="performance-chart"></canvas>
+            </div>
+            `
+        }) %>
+
         <!-- Analysis -->
         <%- include('../partials/card', {
             title: 'Analysis',

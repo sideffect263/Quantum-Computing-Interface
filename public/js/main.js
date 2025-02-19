@@ -271,6 +271,7 @@ function showNotification(message, type = 'info') {
 // Event handlers
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Document loaded. Initializing performance chart...');
+    initializePerformanceChart();
     // Initialize the performance chart only once on page load
     if (!performanceChart) {
         initializePerformanceChart();
@@ -282,6 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const description = testCases[size].description;
         button.setAttribute('title', description);
     });
+    initializePerformanceChart();
 });
 
 function displayError(message) {
