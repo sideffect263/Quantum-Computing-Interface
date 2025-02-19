@@ -1,6 +1,3 @@
-// public/js/main.js
-
-// Test cases with different sizes
 const testCases = {
     'small': {
         prime: '127',
@@ -39,14 +36,19 @@ let performanceHistory = [];
 let performanceChart = null;
 
 function initializePerformanceChart() {
+    console.log('Initializing performance chart...');
     const canvas = document.getElementById('performance-chart');
     if (!canvas) {
         console.error('Performance chart canvas not found');
         return;
     }
 
+    // Log the current state of the performanceChart variable
+    console.log('Current performanceChart:', performanceChart);
+
     // Destroy existing chart if it exists
     if (performanceChart) {
+        console.log('Destroying existing performance chart...');
         performanceChart.destroy();
         performanceChart = null;
     }
@@ -57,10 +59,14 @@ function initializePerformanceChart() {
         return;
     }
 
+    // Log the state of the canvas element
+    console.log('Canvas element:', canvas);
+
     // Set canvas dimensions
     canvas.width = canvas.parentElement.clientWidth;
     canvas.height = canvas.parentElement.clientHeight;
 
+    console.log('Creating new performance chart...');
     performanceChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -90,10 +96,15 @@ function initializePerformanceChart() {
             }
         }
     });
+
+    // Log the new state of the performanceChart variable
+    console.log('New performanceChart:', performanceChart);
 }
 
 function updatePerformanceChart() {
+    console.log('Updating performance chart...');
     if (!performanceChart) {
+        console.warn('Performance chart is not initialized');
         return;
     }
 
@@ -111,6 +122,7 @@ function updatePerformanceChart() {
 
 // Cleanup function
 function cleanupChart() {
+    console.log('Cleaning up performance chart...');
     if (performanceChart) {
         performanceChart.destroy();
         performanceChart = null;
@@ -181,14 +193,14 @@ window.addEventListener('beforeunload', cleanupChart);
 
 // Load a test case into the form
 function loadTestCase(size) {
-    const testCase = testCases[size];
-    document.getElementById('test-prime').value = testCase.prime;
-    document.getElementById('test-generator').value = testCase.generator;
-    document.getElementById('test-private-key').value = testCase.privateKey;
-    document.getElementById('test-other-public-key').value = testCase.otherPublicKey;
+    const loadedTestCase = testCases[size];
+    document.getElementById('test-prime').value = loadedTestCase.prime;
+    document.getElementById('test-generator').value = loadedTestCase.generator;
+    document.getElementById('test-private-key').value = loadedTestCase.privateKey;
+    document.getElementById('test-other-public-key').value = loadedTestCase.otherPublicKey;
 
     // Show a notification
-    showNotification(`Loaded ${testCase.description}`, 'info');
+    showNotification(`Loaded ${loadedTestCase.description}`, 'info');
 }
 
 // Display the results
@@ -258,9 +270,9 @@ function showNotification(message, type = 'info') {
 // Initialize tooltips
 // Event handlers
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('Document loaded. Initializing performance chart...');
     // Initialize the performance chart only once on page load
     if (!performanceChart) {
-
         initializePerformanceChart();
     }
     
@@ -278,4 +290,4 @@ function displayError(message) {
     errorMessageDiv.classList.remove('hidden');
 }
 
-// Example usage: displayError('An unexpected error
+// Example usage: displayError('An unexpected error occurred');
