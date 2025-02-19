@@ -43,6 +43,10 @@ function initializePerformanceChart() {
     const canvas = document.getElementById('performance-chart');
     const ctx = canvas?.getContext('2d');
 
+    // Ensure canvas dimensions are set
+    canvas.width = canvas.parentElement.clientWidth;
+    canvas.height = canvas.parentElement.clientHeight;
+
     console.log('Canvas:', canvas);
     if (!ctx) return;
 

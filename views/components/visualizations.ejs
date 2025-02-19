@@ -45,7 +45,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initializeCharts() {
     // Performance Chart
-    const perfCtx = document.getElementById('performance-chart').getContext('2d');
+    const perfCanvas = document.getElementById('performance-chart');
+    const perfCtx = perfCanvas.getContext('2d');
+    // Ensure canvas dimensions are set
+    perfCanvas.width = perfCanvas.parentElement.clientWidth;
+    perfCanvas.height = perfCanvas.parentElement.clientHeight;
     if (window.performanceChart) {
         window.performanceChart.destroy();
     }
@@ -80,7 +84,11 @@ function initializeCharts() {
     });
 
     // Key Size Distribution Chart
-    const keySizeCtx = document.getElementById('key-size-chart').getContext('2d');
+    const keySizeCanvas = document.getElementById('key-size-chart');
+    const keySizeCtx = keySizeCanvas.getContext('2d');
+    // Ensure canvas dimensions are set
+    keySizeCanvas.width = keySizeCanvas.parentElement.clientWidth;
+    keySizeCanvas.height = keySizeCanvas.parentElement.clientHeight;
     if (window.keySizeChart) {
         window.keySizeChart.destroy();
     }
@@ -105,7 +113,11 @@ function initializeCharts() {
     });
 
     // Time Complexity Chart
-    const complexityCtx = document.getElementById('complexity-chart').getContext('2d');
+    const complexityCanvas = document.getElementById('complexity-chart');
+    const complexityCtx = complexityCanvas.getContext('2d');
+    // Ensure canvas dimensions are set
+    complexityCanvas.width = complexityCanvas.parentElement.clientWidth;
+    complexityCanvas.height = complexityCanvas.parentElement.clientHeight;
     if (window.complexityChart) {
         window.complexityChart.destroy();
     }

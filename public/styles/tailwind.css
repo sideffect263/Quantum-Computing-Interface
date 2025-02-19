@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+@layer components {
+  .btn-primary {
+    @apply px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition;
+  }
+  
+  .input-field {
+    @apply w-full p-2 bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:ring-2 focus:ring-blue-500;
+  }
+}
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImlucHV0LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSIsImZpbGUiOiJ0YWlsd2luZC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJAdGFpbHdpbmQgYmFzZTtcclxuQHRhaWx3aW5kIGNvbXBvbmVudHM7XHJcbkB0YWlsd2luZCB1dGlsaXRpZXM7XHJcblxyXG4vKiBDdXN0b20gc3R5bGVzICovXHJcbkBsYXllciBjb21wb25lbnRzIHtcclxuICAuYnRuLXByaW1hcnkge1xyXG4gICAgQGFwcGx5IHB4LTQgcHktMiBiZy1ibHVlLTUwMCB0ZXh0LXdoaXRlIHJvdW5kZWQgaG92ZXI6YmctYmx1ZS02MDAgdHJhbnNpdGlvbjtcclxuICB9XHJcbiAgXHJcbiAgLmlucHV0LWZpZWxkIHtcclxuICAgIEBhcHBseSB3LWZ1bGwgcC0yIGJnLWdyYXktNzAwIGJvcmRlciBib3JkZXItZ3JheS02MDAgcm91bmRlZCB0ZXh0LXdoaXRlIGZvY3VzOm91dGxpbmUtbm9uZSBmb2N1czpyaW5nLTIgZm9jdXM6cmluZy1ibHVlLTUwMDtcclxuICB9XHJcbn0iXX0= */

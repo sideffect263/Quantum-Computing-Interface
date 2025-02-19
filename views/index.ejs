@@ -1,6 +1,11 @@
 <!-- views/index.ejs -->
-<%- include('./partials/header') %>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('./partials/header') %>
+  <link rel="stylesheet" href="<%= cssFile %>">
+</head>
+<body>
 <div class="space-y-8">
     <!-- Hero Section -->
     <section class="text-center py-12">
@@ -145,3 +150,5 @@ document.addEventListener('DOMContentLoaded', () => {
 </style>
 
 <%- include('./partials/footer') %>
+</body>
+</html>

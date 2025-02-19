@@ -28,7 +28,7 @@ app.get('/health', (req, res) => {
 
 // Serve the frontend interface
 app.get('/', (req, res) => {
-  res.render('index');
+  res.render('index', { cssFile: 'styles/tailwind.css' });
 });
 
 // Error handling middleware
