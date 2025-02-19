@@ -5,6 +5,9 @@
         icon: 'fas fa-microchip',
         iconColor: 'blue',
         content: `
+        <p class="text-gray-300 mb-4">
+            Use this form to create a quantum circuit. Select the number of qubits and the type of circuit you want to generate. The circuit will be visualized and the corresponding QASM code will be provided.
+        </p>
         <form id="circuit-form" class="space-y-4">
             <div class="form-group">
                 <label for="qubits">Number of Qubits</label>
@@ -37,6 +40,9 @@
             icon: 'fas fa-project-diagram',
             iconColor: 'green',
             content: `
+            <p class="text-gray-300 mb-4">
+                The visual representation of the quantum circuit you created.
+            </p>
             <div class="bg-gray-900 p-4 rounded-lg overflow-x-auto">
                 <div id="circuit-diagram" class="font-mono whitespace-pre"></div>
             </div>
@@ -55,6 +61,9 @@
             icon: 'fas fa-code',
             iconColor: 'yellow',
             content: `
+            <p class="text-gray-300 mb-4">
+                The Quantum Assembly (QASM) code for the quantum circuit you created. You can copy this code for further use.
+            </p>
             <div class="bg-gray-900 p-4 rounded-lg">
                 <pre id="qasm-code" class="text-sm overflow-x-auto"></pre>
             </div>

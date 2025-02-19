@@ -4,6 +4,7 @@
 <head>
   <%- include('./partials/header') %>
   <link rel="stylesheet" href="<%= cssFile %>">
+  <link rel="stylesheet" href="/css/tailwind.css">
 </head>
 <body>
 <div class="space-y-8">
@@ -13,6 +14,9 @@
         <p class="text-gray-400 max-w-2xl mx-auto">
             Explore the intersection of quantum computing and cryptography through interactive experiments
             and performance testing.
+        </p>
+        <p class="text-gray-300 max-w-2xl mx-auto mt-4">
+            Use the tabs below to navigate between different sections. Each section provides unique insights and tools to help you understand and experiment with quantum computing and cryptography.
         </p>
     </section>
 
@@ -43,12 +47,21 @@
         <div class="mt-6">
             <div x-show="activeTab === 'performance'" x-cloak>
                 <%- include('./components/performance-test') %>
+                <p class="text-gray-300 mt-4">
+                    In this section, you can test the performance of various cryptographic algorithms. Select the algorithm and input size to see how they perform under different conditions.
+                </p>
             </div>
             <div x-show="activeTab === 'quantum'" x-cloak>
                 <%- include('./components/quantum-circuit') %>
+                <p class="text-gray-300 mt-4">
+                    Here, you can design and simulate quantum circuits. Choose the number of qubits and the type of circuit to generate the corresponding quantum assembly code (QASM) and visualize the circuit.
+                </p>
             </div>
             <div x-show="activeTab === 'visualization'" x-cloak>
                 <%- include('./components/visualizations') %>
+                <p class="text-gray-300 mt-4">
+                    This section provides visualizations of the performance data and quantum circuits. Use the charts to gain insights into the computational complexity and behavior of different algorithms and circuits.
+                </p>
             </div>
         </div>
     </div>

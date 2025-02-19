@@ -8,6 +8,9 @@
             icon: 'fas fa-flask',
             iconColor: 'purple',
             content: `
+            <p class="text-gray-300 mb-4">
+                Select a preset test case to quickly load predefined parameters for performance testing. Each preset represents a different bit length for the cryptographic algorithm.
+            </p>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <button onclick="loadTestCase('small')" 
                     class="btn-preset bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30">
@@ -39,6 +42,9 @@
             icon: 'fas fa-keyboard',
             iconColor: 'blue',
             content: `
+            <p class="text-gray-300 mb-4">
+                Enter custom parameters for the performance test. This allows you to specify your own prime number, generator, private key, and other public key.
+            </p>
             <form id="performance-test-form" class="space-y-4">
                 <div class="space-y-4">
                     <div class="form-group">
@@ -76,6 +82,9 @@
                 icon: 'fas fa-key',
                 iconColor: 'green',
                 content: `
+                <p class="text-gray-300 mb-4">
+                    The public key generated from the provided parameters.
+                </p>
                 <div class="font-mono bg-gray-900 p-4 rounded-lg" id="result-public-key"></div>
                 `
             }) %>
@@ -85,6 +94,9 @@
                 icon: 'fas fa-lock',
                 iconColor: 'yellow',
                 content: `
+                <p class="text-gray-300 mb-4">
+                    The shared secret calculated using the Diffie-Hellman key exchange algorithm.
+                </p>
                 <div class="font-mono bg-gray-900 p-4 rounded-lg" id="result-shared-secret"></div>
                 `
             }) %>
@@ -96,6 +108,9 @@
             icon: 'fas fa-chart-line',
             iconColor: 'blue',
             content: `
+            <p class="text-gray-300 mb-4">
+                Detailed performance metrics for the cryptographic operations.
+            </p>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div class="metric-card">
                     <div class="text-sm text-gray-400">Public Key Calculation</div>
@@ -119,6 +134,9 @@
             icon: 'fas fa-microscope',
             iconColor: 'purple',
             content: `
+            <p class="text-gray-300 mb-4">
+                Analysis of the cryptographic parameters and their computational complexity.
+            </p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="analysis-card">
                     <div class="text-sm text-gray-400">Prime Bit Length</div>

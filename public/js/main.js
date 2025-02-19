@@ -39,16 +39,12 @@ let performanceHistory = [];
 let performanceChart = null;
 
 function initializePerformanceChart() {
-    console.log('Initializing performance chart');
+    con
     const canvas = document.getElementById('performance-chart');
-    const ctx = canvas?.getContext('2d');
-
-    // Ensure canvas dimensions are set
-    canvas.width = canvas.parentElement.clientWidth;
-    canvas.height = canvas.parentElement.clientHeight;
-
-    console.log('Canvas:', canvas);
-    if (!ctx) return;
+    if (!canvas) {
+        console.error('Performance chart canvas not found');
+        return;
+    }
 
     // Destroy existing chart if it exists
     if (performanceChart) {
@@ -56,7 +52,16 @@ function initializePerformanceChart() {
         performanceChart = null;
     }
 
-    // Create a new chart
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+        console.error('Could not get canvas context');
+        return;
+    }
+
+    // Set canvas dimensions
+    canvas.width = canvas.parentElement.clientWidth;
+    canvas.height = canvas.parentElement.clientHeight;
+
     performanceChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -90,7 +95,6 @@ function initializePerformanceChart() {
 
 function updatePerformanceChart() {
     if (!performanceChart) {
-        initializePerformanceChart();
         return;
     }
 
@@ -114,18 +118,7 @@ function cleanupChart() {
     }
 }
 
-// Event handlers
-document.addEventListener('DOMContentLoaded', () => {
-    // Initialize the performance chart on page load
-    initializePerformanceChart();
-    
-    // Add tooltips to preset buttons
-    document.querySelectorAll('.btn-preset').forEach(button => {
-        const size = button.getAttribute('onclick').match(/'(.+?)'/)[1];
-        const description = testCases[size].description;
-        button.setAttribute('title', description);
-    });
-});
+
 
 // Handle form submission
 document.getElementById('performance-test-form').addEventListener('submit', async (event) => {
@@ -256,15 +249,20 @@ function showNotification(message, type = 'info') {
 }
 
 // Initialize tooltips
+// Event handlers
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize the performance chart only once on page load
+    if (!performanceChart) {
+
+        initializePerformanceChart();
+    }
+    
     // Add tooltips to preset buttons
     document.querySelectorAll('.btn-preset').forEach(button => {
         const size = button.getAttribute('onclick').match(/'(.+?)'/)[1];
         const description = testCases[size].description;
         button.setAttribute('title', description);
     });
-
-   
 });
 
 function displayError(message) {
@@ -273,4 +271,4 @@ function displayError(message) {
     errorMessageDiv.classList.remove('hidden');
 }
 
-// Example usage: displayError('An unexpected error occurred.');
+// Example usage: displayError('An unexpected error
