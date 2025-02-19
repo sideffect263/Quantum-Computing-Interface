@@ -1,0 +1,42 @@
+<!-- views/partials/header.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Computing Interface</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+
+    <link rel="stylesheet" type="text/css" href="/styles/custom.css" />
+    <style>
+        [x-cloak] { display: none !important; }
+        </style>
+</head>
+<body class="bg-gradient-to-b from-gray-900 to-gray-800 text-white font-sans min-h-screen">
+    <nav class="bg-gray-800 shadow-lg border-b border-gray-700">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <i class="fas fa-atom text-blue-500 text-2xl mr-2"></i>
+                    <span class="text-xl font-semibold">Quantum Computing Interface</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#about" class="hover:text-blue-400 transition">About</a>
+                    <a href="#documentation" class="hover:text-blue-400 transition">Docs</a>
+                    <a href="https://github.com/yourusername/quantum-computing" 
+                       class="hover:text-blue-400 transition">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div id="error-message" class="container mx-auto px-4 py-2 hidden bg-red-500 text-white rounded-lg"></div>
+    <div class="container mx-auto px-4 py-8">
+        <!-- ...existing code... -->
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,9 @@
+<%- include('./partials/header') %>
+
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold mb-4">An Error Occurred</h1>
+    <p class="text-red-500"><%= error.message %></p>
+    <pre class="bg-gray-800 p-4 rounded-lg text-white"><%= error.stack %></pre>
+</div>
+
+<%- include('./partials/footer') %>

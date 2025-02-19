@@ -1,0 +1,115 @@
+<!-- views/components/quantum-circuit.ejs -->
+<div class="space-y-6">
+    <%- include('../partials/card', {
+        title: 'Create Quantum Circuit',
+        icon: 'fas fa-microchip',
+        iconColor: 'blue',
+        content: `
+        <form id="circuit-form" class="space-y-4">
+            <div class="form-group">
+                <label for="qubits">Number of Qubits</label>
+                <input type="number" id="qubits" name="qubits" min="1" max="16" 
+                       class="input-field" required>
+                <p class="text-sm text-gray-400 mt-1">
+                    Select between 1 and 16 qubits for your circuit
+                </p>
+            </div>
+            <div class="form-group">
+                <label for="circuit-type">Circuit Type</label>
+                <select id="circuit-type" name="circuit-type" class="input-field">
+                    <option value="hadamard">Hadamard Gate</option>
+                    <option value="bell">Bell State</option>
+                    <option value="qft">Quantum Fourier Transform</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-primary w-full">
+                <i class="fas fa-play mr-2"></i>
+                Create Circuit
+            </button>
+        </form>
+        `
+    }) %>
+
+    <!-- Circuit Visualization -->
+    <div id="circuit-visualization" class="hidden">
+        <%- include('../partials/card', {
+            title: 'Circuit Visualization',
+            icon: 'fas fa-project-diagram',
+            iconColor: 'green',
+            content: `
+            <div class="bg-gray-900 p-4 rounded-lg overflow-x-auto">
+                <div id="circuit-diagram" class="font-mono whitespace-pre"></div>
+            </div>
+            <button id="visualize-circuit" class="btn-primary mt-4">
+                <i class="fas fa-eye mr-2"></i>
+                Visualize Circuit
+            </button>
+            `
+        }) %>
+    </div>
+
+    <!-- QASM Output -->
+    <div id="qasm-output" class="hidden">
+        <%- include('../partials/card', {
+            title: 'QASM Code',
+            icon: 'fas fa-code',
+            iconColor: 'yellow',
+            content: `
+            <div class="bg-gray-900 p-4 rounded-lg">
+                <pre id="qasm-code" class="text-sm overflow-x-auto"></pre>
+            </div>
+            <button onclick="copyQASM()" class="btn-primary mt-4">
+                <i class="fas fa-copy mr-2"></i>
+                Copy QASM
+            </button>
+            `
+        }) %>
+    </div>
+</div>
+
+<script>
+document.getElementById('circuit-form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    
+    const formData = {
+        qubits: document.getElementById('qubits').value,
+        circuitType: document.getElementById('circuit-type').value
+    };
+
+    try {
+        const response = await fetch('/api/quantum/circuit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+        
+        if (result.status === 'success') {
+            document.getElementById('circuit-visualization').classList.remove('hidden');
+            document.getElementById('qasm-output').classList.remove('hidden');
+            document.getElementById('circuit-diagram').textContent = result.circuitDiagram;
+            document.getElementById('qasm-code').textContent = result.qasmCode;
+            showNotification('Circuit created successfully', 'success');
+        } else {
+            showNotification(result.message, 'error');
+        }
+    } catch (error) {
+        showNotification('Error creating circuit: ' + error.message, 'error');
+    }
+});
+
+document.getElementById('visualize-circuit').addEventListener('click', () => {
+    // Add visualization logic here
+    showNotification('Circuit visualization is not yet implemented', 'info');
+});
+
+function copyQASM() {
+    const qasmCode = document.getElementById('qasm-code').textContent;
+    navigator.clipboard.writeText(qasmCode).then(() => {
+        showNotification('QASM code copied to clipboard', 'success');
+    }).catch(err => {
+        showNotification('Failed to copy QASM code: ' + err, 'error');
+    });
+}
+</script>

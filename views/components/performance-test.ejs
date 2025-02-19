@@ -1,0 +1,135 @@
+<!-- views/components/performance-test.ejs -->
+<div class="space-y-6">
+    <!-- Test Configuration -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Preset Test Cases -->
+        <%- include('../partials/card', {
+            title: 'Preset Test Cases',
+            icon: 'fas fa-flask',
+            iconColor: 'purple',
+            content: `
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <button onclick="loadTestCase('small')" 
+                    class="btn-preset bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30">
+                    <i class="fas fa-microchip mr-2"></i>
+                    8-bit
+                </button>
+                <button onclick="loadTestCase('medium')" 
+                    class="btn-preset bg-green-500/20 hover:bg-green-500/30 border border-green-500/30">
+                    <i class="fas fa-microchip mr-2"></i>
+                    16-bit
+                </button>
+                <button onclick="loadTestCase('large')" 
+                    class="btn-preset bg-yellow-500/20 hover:bg-yellow-500/30 border border-yellow-500/30">
+                    <i class="fas fa-microchip mr-2"></i>
+                    32-bit
+                </button>
+                <button onclick="loadTestCase('very-large')" 
+                    class="btn-preset bg-red-500/20 hover:bg-red-500/30 border border-red-500/30">
+                    <i class="fas fa-microchip mr-2"></i>
+                    64-bit
+                </button>
+            </div>
+            `
+        }) %>
+
+        <!-- Custom Input -->
+        <%- include('../partials/card', {
+            title: 'Custom Input',
+            icon: 'fas fa-keyboard',
+            iconColor: 'blue',
+            content: `
+            <form id="performance-test-form" class="space-y-4">
+                <div class="space-y-4">
+                    <div class="form-group">
+                        <label for="test-prime">Prime Number</label>
+                        <input type="text" id="test-prime" class="input-field" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="test-generator">Generator</label>
+                        <input type="text" id="test-generator" class="input-field" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="test-private-key">Private Key</label>
+                        <input type="text" id="test-private-key" class="input-field" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="test-other-public-key">Other Public Key</label>
+                        <input type="text" id="test-other-public-key" class="input-field" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary w-full">
+                    <i class="fas fa-play mr-2"></i>
+                    Run Performance Test
+                </button>
+            </form>
+            `
+        }) %>
+    </div>
+
+    <!-- Results Section -->
+    <div id="results-section" class="hidden space-y-6">
+        <!-- Basic Results -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <%- include('../partials/card', {
+                title: 'Public Key',
+                icon: 'fas fa-key',
+                iconColor: 'green',
+                content: `
+                <div class="font-mono bg-gray-900 p-4 rounded-lg" id="result-public-key"></div>
+                `
+            }) %>
+
+            <%- include('../partials/card', {
+                title: 'Shared Secret',
+                icon: 'fas fa-lock',
+                iconColor: 'yellow',
+                content: `
+                <div class="font-mono bg-gray-900 p-4 rounded-lg" id="result-shared-secret"></div>
+                `
+            }) %>
+        </div>
+
+        <!-- Performance Metrics -->
+        <%- include('../partials/card', {
+            title: 'Performance Metrics',
+            icon: 'fas fa-chart-line',
+            iconColor: 'blue',
+            content: `
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="metric-card">
+                    <div class="text-sm text-gray-400">Public Key Calculation</div>
+                    <div class="text-2xl font-mono mt-2" id="metric-public-key-time"></div>
+                </div>
+                <div class="metric-card">
+                    <div class="text-sm text-gray-400">Shared Secret Calculation</div>
+                    <div class="text-2xl font-mono mt-2" id="metric-shared-secret-time"></div>
+                </div>
+                <div class="metric-card">
+                    <div class="text-sm text-gray-400">Total Execution Time</div>
+                    <div class="text-2xl font-mono mt-2" id="metric-total-time"></div>
+                </div>
+            </div>
+            `
+        }) %>
+
+        <!-- Analysis -->
+        <%- include('../partials/card', {
+            title: 'Analysis',
+            icon: 'fas fa-microscope',
+            iconColor: 'purple',
+            content: `
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="analysis-card">
+                    <div class="text-sm text-gray-400">Prime Bit Length</div>
+                    <div class="text-2xl font-mono mt-2" id="analysis-bit-length"></div>
+                </div>
+                <div class="analysis-card">
+                    <div class="text-sm text-gray-400">Computational Complexity</div>
+                    <div class="text-2xl font-mono mt-2" id="analysis-complexity"></div>
+                </div>
+            </div>
+            `
+        }) %>
+    </div>
+</div>

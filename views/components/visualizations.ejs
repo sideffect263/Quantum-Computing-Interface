@@ -1,0 +1,133 @@
+<!-- views/components/visualizations.ejs -->
+<div class="space-y-6">
+    <!-- Performance Metrics -->
+    <%- include('../partials/card', {
+        title: 'Computation Time vs. Bit Length',
+        icon: 'fas fa-chart-line',
+        iconColor: 'blue',
+        content: `
+        <div class="h-64">
+            <canvas id="performance-chart"></canvas>
+        </div>
+        `
+    }) %>
+
+    <!-- Bit Distribution -->
+    <%- include('../partials/card', {
+        title: 'Key Size Distribution',
+        icon: 'fas fa-chart-pie',
+        iconColor: 'green',
+        content: `
+        <div class="h-64">
+            <canvas id="key-size-chart"></canvas>
+        </div>
+        `
+    }) %>
+
+    <!-- Time Complexity -->
+    <%- include('../partials/card', {
+        title: 'Time Complexity Analysis',
+        icon: 'fas fa-clock',
+        iconColor: 'purple',
+        content: `
+        <div class="h-64">
+            <canvas id="complexity-chart"></canvas>
+        </div>
+        `
+    }) %>
+</div>
+
+<script>
+// Initialize charts when the component is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    initializeCharts();
+});
+
+function initializeCharts() {
+    // Performance Chart
+    const perfCtx = document.getElementById('performance-chart').getContext('2d');
+    new Chart(perfCtx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Computation Time (ms)',
+                data: [],
+                borderColor: 'rgb(59, 130, 246)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    }
+                },
+                x: {
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    }
+                }
+            }
+        }
+    });
+
+    // Key Size Distribution Chart
+    const keySizeCtx = document.getElementById('key-size-chart').getContext('2d');
+    new Chart(keySizeCtx, {
+        type: 'pie',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Key Size Distribution',
+                data: [],
+                backgroundColor: [
+                    'rgb(34, 197, 94)',
+                    'rgb(16, 185, 129)',
+                    'rgb(5, 150, 105)'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    // Time Complexity Chart
+    const complexityCtx = document.getElementById('complexity-chart').getContext('2d');
+    new Chart(complexityCtx, {
+        type: 'bar',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Time Complexity',
+                data: [],
+                backgroundColor: 'rgb(139, 92, 246)'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    }
+                },
+                x: {
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    }
+                }
+            }
+        }
+    });
+}
+</script>
+

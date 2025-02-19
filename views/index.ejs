@@ -1,0 +1,147 @@
+<!-- views/index.ejs -->
+<%- include('./partials/header') %>
+
+<div class="space-y-8">
+    <!-- Hero Section -->
+    <section class="text-center py-12">
+        <h1 class="text-4xl font-bold mb-4">Quantum Computing & Cryptography</h1>
+        <p class="text-gray-400 max-w-2xl mx-auto">
+            Explore the intersection of quantum computing and cryptography through interactive experiments
+            and performance testing.
+        </p>
+    </section>
+
+    <!-- Main Tabs -->
+    <div class="bg-gray-800 rounded-lg p-1" x-data="{ activeTab: 'performance' }">
+        <div class="flex space-x-1">
+            <button @click="activeTab = 'performance'" 
+                    :class="{ 'bg-gray-700': activeTab === 'performance' }"
+                    class="flex-1 py-2 px-4 rounded-lg text-sm font-medium transition">
+                <i class="fas fa-tachometer-alt mr-2"></i>
+                Performance Testing
+            </button>
+            <button @click="activeTab = 'quantum'" 
+                    :class="{ 'bg-gray-700': activeTab === 'quantum' }"
+                    class="flex-1 py-2 px-4 rounded-lg text-sm font-medium transition">
+                <i class="fas fa-atom mr-2"></i>
+                Quantum Circuits
+            </button>
+            <button @click="activeTab = 'visualization'" 
+                    :class="{ 'bg-gray-700': activeTab === 'visualization' }"
+                    class="flex-1 py-2 px-4 rounded-lg text-sm font-medium transition">
+                <i class="fas fa-chart-line mr-2"></i>
+                Visualizations
+            </button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="mt-6">
+            <div x-show="activeTab === 'performance'" x-cloak>
+                <%- include('./components/performance-test') %>
+            </div>
+            <div x-show="activeTab === 'quantum'" x-cloak>
+                <%- include('./components/quantum-circuit') %>
+            </div>
+            <div x-show="activeTab === 'visualization'" x-cloak>
+                <%- include('./components/visualizations') %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Initialize Alpine.js -->
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<!-- Add Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+// Initialize charts when the visualization tab is shown
+document.addEventListener('alpine:init', () => {
+    Alpine.data('charts', () => ({
+        init() {
+            this.$watch('activeTab', (value) => {
+                if (value === 'visualization') {
+                    this.initializeCharts();
+                }
+            });
+        },
+        initializeCharts() {
+            // Performance Chart
+            const perfCtx = document.getElementById('performance-chart')?.getContext('2d');
+            if (perfCtx) {
+                new Chart(perfCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['8-bit', '16-bit', '32-bit', '64-bit'],
+                        datasets: [{
+                            label: 'Computation Time (ms)',
+                            data: [10, 25, 45, 85],
+                            borderColor: 'rgb(59, 130, 246)',
+                            tension: 0.1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Initialize other charts similarly
+        }
+    }));
+});
+
+// Handle quantum circuit form submission
+document.addEventListener('DOMContentLoaded', () => {
+    const circuitForm = document.getElementById('circuit-form');
+    if (circuitForm) {
+        circuitForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            
+            const formData = {
+                qubits: document.getElementById('qubits').value,
+                circuitType: document.getElementById('circuit-type').value
+            };
+
+            try {
+                const response = await fetch('/api/quantum/circuit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    document.getElementById('circuit-visualization')?.classList.remove('hidden');
+                    document.getElementById('qasm-output')?.classList.remove('hidden');
+                    document.getElementById('circuit-diagram').textContent = result.circuitDiagram;
+                    document.getElementById('qasm-code').textContent = result.qasmCode;
+                }
+            } catch (error) {
+                console.error('Error creating circuit:', error);
+            }
+        });
+    }
+});
+</script>
+
+<style>
+[x-cloak] { display: none !important; }
+</style>
+
+<%- include('./partials/footer') %>
