@@ -24,15 +24,21 @@ exports.diffieHellmanKeyExchange = (req, res) => {
       throw new Error('Private key must be less than prime');
     }
 
+    console.log('Inputs validated');
+
     // Time the public key calculation
     const publicKeyStartTime = process.hrtime();
     const publicKey = modPow(g, privateKeyNum, p);
     const publicKeyTime = getElapsedMs(publicKeyStartTime);
 
+    console.log('Public key calculated');
+
     // Time the shared secret calculation
     const secretStartTime = process.hrtime();
     const sharedSecret = modPow(otherPublicKeyNum, privateKeyNum, p);
     const secretTime = getElapsedMs(secretStartTime);
+
+    console.log('Shared secret calculated');
 
     // Get total time
     const totalTime = getElapsedMs(startTime);

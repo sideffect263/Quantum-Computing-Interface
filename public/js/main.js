@@ -39,7 +39,6 @@ let performanceHistory = [];
 let performanceChart = null;
 
 function initializePerformanceChart() {
-    con
     const canvas = document.getElementById('performance-chart');
     if (!canvas) {
         console.error('Performance chart canvas not found');
@@ -118,16 +117,19 @@ function cleanupChart() {
     }
 }
 
-
-
 // Handle form submission
 document.getElementById('performance-test-form').addEventListener('submit', async (event) => {
     event.preventDefault();
     
     const submitButton = event.target.querySelector('button[type="submit"]');
     const originalButtonText = submitButton.innerHTML;
+    const loadingSpinner = document.getElementById('loading-spinner');
+    const errorMessage = document.getElementById('error-message');
+    
     submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Computing...';
     submitButton.disabled = true;
+    loadingSpinner.classList.remove('hidden');
+    errorMessage.classList.add('hidden');
 
     try {
         const formData = {
@@ -159,13 +161,18 @@ document.getElementById('performance-test-form').addEventListener('submit', asyn
             updatePerformanceChart();
         } else {
             showNotification(result.message || 'An error occurred', 'error');
+            errorMessage.textContent = result.message || 'An error occurred';
+            errorMessage.classList.remove('hidden');
         }
     } catch (error) {
         console.error(error);
         showNotification('Error running performance test: ' + error.message, 'error');
+        errorMessage.textContent = 'Error running performance test: ' + error.message;
+        errorMessage.classList.remove('hidden');
     } finally {
         submitButton.innerHTML = originalButtonText;
         submitButton.disabled = false;
+        loadingSpinner.classList.add('hidden');
     }
 });
 

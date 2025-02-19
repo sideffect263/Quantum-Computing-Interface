@@ -64,6 +64,11 @@
                         <input type="text" id="test-other-public-key" class="input-field" required>
                     </div>
                 </div>
+                <div id="loading-spinner" class="hidden text-center">
+                    <i class="fas fa-spinner fa-spin text-4xl text-blue-500"></i>
+                    <p class="text-gray-300 mt-2">Computing...</p>
+                </div>
+                <div id="error-message" class="hidden text-center text-red-500 mt-4"></div>
                 <button type="submit" class="btn-primary w-full">
                     <i class="fas fa-play mr-2"></i>
                     Run Performance Test

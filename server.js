@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const path = require('path');
 const quantumRouter = require('./routes/quantum');
+const timeout = require('connect-timeout');
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public'))); // Ensure this line is present
+app.use(timeout('30s')); // Add timeout middleware
 
 // Set view engine
 app.set('view engine', 'ejs');
