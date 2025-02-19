@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Orbital paths -->
+  <g transform="translate(16 16)">
+    <ellipse cx="0" cy="0" rx="14" ry="8" 
+            fill="none" stroke="rgba(160,160,160,0.3)" stroke-width="1"/>
+    <ellipse cx="0" cy="0" rx="8" ry="14" 
+            fill="none" stroke="rgba(160,160,160,0.3)" stroke-width="1"/>
+    <circle cx="0" cy="0" r="11" 
+            fill="none" stroke="rgba(160,160,160,0.3)" stroke-width="1"/>
+  </g>
+
+  <!-- Static Electrons -->
+  <g transform="translate(16 16)">
+    <!-- Position electrons at visually pleasing points along their paths -->
+    <circle cx="12" cy="4" r="2.5" fill="#4A90E2"/>
+    <circle cx="-4" cy="-12" r="2.5" fill="#F5A623"/>
+    <circle cx="-8" cy="8" r="2.5" fill="#D0021B"/>
+  </g>
+
+  <!-- Nucleus -->
+  <circle cx="16" cy="16" r="4" fill="#4A90E2"/>
+</svg>

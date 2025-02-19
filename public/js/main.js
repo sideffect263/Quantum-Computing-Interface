@@ -39,8 +39,11 @@ let performanceHistory = [];
 let performanceChart = null;
 
 function initializePerformanceChart() {
+    console.log('Initializing performance chart');
     const canvas = document.getElementById('performance-chart');
     const ctx = canvas?.getContext('2d');
+
+    console.log('Canvas:', canvas);
     if (!ctx) return;
 
     // Destroy existing chart if it exists
@@ -257,8 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
         button.setAttribute('title', description);
     });
 
-    // Initialize the performance chart on page load
-    initializePerformanceChart();
+   
 });
 
 function displayError(message) {
