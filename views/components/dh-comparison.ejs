@@ -1,0 +1,212 @@
+<!-- views/components/dh-comparison.ejs -->
+<div x-data="dhComparison()" class="space-y-6">
+    <!-- Main Comparison Chart -->
+    <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+        <h2 class="text-xl font-semibold mb-4">Current DH Problem-Solving Capabilities (2024)</h2>
+        <div class="h-96">
+            <canvas id="capabilityChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Detailed Breakdown Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Quantum Capabilities Card -->
+        <div class="bg-gray-800 rounded-lg p-6">
+            <h3 class="text-lg font-semibold mb-4 text-blue-400">
+                <i class="fas fa-atom mr-2"></i>
+                Quantum Computer Capabilities
+            </h3>
+            <div class="space-y-4">
+                <div class="p-4 bg-blue-500/10 rounded-lg">
+                    <h4 class="font-medium mb-2">Current Status</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-center">
+                            <span class="w-1/2">Max Reliable Bits:</span>
+                            <span class="font-mono">4-6 bits</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-1/2">Experimental Range:</span>
+                            <span class="font-mono">6-8 bits</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-1/2">Error Rate:</span>
+                            <span class="font-mono">~1% per gate</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="p-4 bg-blue-500/10 rounded-lg">
+                    <h4 class="font-medium mb-2">Major Limitations</h4>
+                    <ul class="space-y-1 text-sm">
+                        <template x-for="limitation in quantumLimitations" :key="limitation">
+                            <li x-text="'• ' + limitation"></li>
+                        </template>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Classical Capabilities Card -->
+        <div class="bg-gray-800 rounded-lg p-6">
+            <h3 class="text-lg font-semibold mb-4 text-green-400">
+                <i class="fas fa-microchip mr-2"></i>
+                Classical Computer Capabilities
+            </h3>
+            <div class="space-y-4">
+                <div class="p-4 bg-green-500/10 rounded-lg">
+                    <h4 class="font-medium mb-2">Current Status</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-center">
+                            <span class="w-1/2">Practical Limit:</span>
+                            <span class="font-mono">32-40 bits</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-1/2">Theoretical Max:</span>
+                            <span class="font-mono">64 bits</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-1/2">Time Complexity:</span>
+                            <span class="font-mono">O(2^n)</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="p-4 bg-green-500/10 rounded-lg">
+                    <h4 class="font-medium mb-2">Time to Break</h4>
+                    <ul class="space-y-1 text-sm">
+                        <template x-for="(time, bits) in breakTimes" :key="bits">
+                            <li>
+                                <span x-text="bits + ' bits:'"></span>
+                                <span x-text="time" class="ml-2 font-mono"></span>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparison Timeline -->
+    <div class="bg-gray-800 rounded-lg p-6">
+        <h3 class="text-lg font-semibold mb-4">Time to Break DH Keys</h3>
+        <div class="relative h-20">
+            <div class="absolute w-full h-2 bg-gray-700 top-1/2 transform -translate-y-1/2"></div>
+            <template x-for="(point, index) in timelinePoints" :key="index">
+                <div 
+                    :class="point.color"
+                    class="absolute h-4 w-4 rounded-full top-1/2 transform -translate-y-1/2 cursor-pointer"
+                    :style="'left: ' + point.position + '%'"
+                    @mouseenter="showTooltip(index)"
+                    @mouseleave="hideTooltip()">
+                    <div 
+                        x-show="activeTooltip === index"
+                        class="absolute bottom-full mb-2 -translate-x-1/2 bg-gray-900 text-white p-2 rounded text-sm whitespace-nowrap">
+                        <span x-text="point.label"></span>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+</div>
+
+<script>
+function dhComparison() {
+    return {
+        chart: null,
+        activeTooltip: null,
+        quantumLimitations: [
+            "Limited qubit coherence time",
+            "High error rates per operation",
+            "Insufficient qubit count",
+            "Quantum noise and decoherence"
+        ],
+        breakTimes: {
+            "16 bits": "Seconds",
+            "32 bits": "Hours",
+            "64 bits": "Years",
+            "128 bits": "Millennia"
+        },
+        timelinePoints: [
+            { position: 10, color: 'bg-green-500', label: '16 bits: Minutes' },
+            { position: 30, color: 'bg-yellow-500', label: '32 bits: Days' },
+            { position: 50, color: 'bg-red-500', label: '64 bits: Years' },
+            { position: 70, color: 'bg-purple-500', label: '128 bits: Millennia' }
+        ],
+        init() {
+            this.initChart();
+        },
+        initChart() {
+            const ctx = document.getElementById('capabilityChart').getContext('2d');
+            const bitSizes = [8, 16, 32, 64, 128, 256];
+            
+            this.chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: bitSizes.map(size => size + ' bits'),
+                    datasets: [{
+                        label: 'Quantum Computer (Current)',
+                        data: bitSizes.map(size => size <= 6 ? 100 : size <= 8 ? 50 : 0),
+                        backgroundColor: '#60a5fa',
+                        borderColor: '#3b82f6',
+                        borderWidth: 1
+                    }, {
+                        label: 'Classical Computer',
+                        data: bitSizes.map(size => size <= 40 ? 100 : size <= 64 ? 30 : 0),
+                        backgroundColor: '#4ade80',
+                        borderColor: '#22c55e',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Feasibility %',
+                                color: '#fff'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#fff'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#fff'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#fff'
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + 
+                                           context.raw + '% feasible';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        },
+        showTooltip(index) {
+            this.activeTooltip = index;
+        },
+        hideTooltip() {
+            this.activeTooltip = null;
+        }
+    }
+}
+</script>

@@ -137,8 +137,23 @@ document.getElementById('performance-test-form').addEventListener('submit', asyn
     const originalButtonText = submitButton.innerHTML;
     const loadingSpinner = document.getElementById('loading-spinner');
     const errorMessage = document.getElementById('error-message');
-    
-    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Computing...';
+    submitButton.innerHTML = '<i class="fas fa-lock mr-2"></i>';
+    const icon = submitButton.querySelector('i');
+    icon.classList.add('fa-lock-open');
+
+    // Function to toggle the lock icon
+    function toggleLockIcon() {
+        if (icon.classList.contains('fa-lock-open')) {
+            icon.classList.remove('fa-lock-open');
+            icon.classList.add('fa-lock');
+        } else {
+            icon.classList.remove('fa-lock');
+            icon.classList.add('fa-lock-open');
+        }
+    }
+
+    // Set interval to toggle the icon every 500ms
+    const iconInterval = setInterval(toggleLockIcon, 500);
     submitButton.disabled = true;
     loadingSpinner.classList.remove('hidden');
     errorMessage.classList.add('hidden');

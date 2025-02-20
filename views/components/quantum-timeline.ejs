@@ -1,0 +1,163 @@
+<div x-data="quantumTimeline()" class="space-y-6">
+    <!-- Main Timeline Chart Card -->
+    <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+        <h2 class="text-xl font-semibold mb-4">DH Security Timeline vs Quantum Progress</h2>
+        <div class="h-96">
+            <canvas id="timelineChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Phase Selection Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Current Phase Card -->
+        <div 
+            @click="selectYear(2024)" 
+            :class="{ 'border-green-500': selectedYear === 2024 }"
+            class="bg-gray-800 rounded-lg p-6 cursor-pointer hover:bg-gray-700 transition-colors border-2 border-transparent">
+            <h3 class="font-semibold mb-2">Current Phase (2024)</h3>
+            <p class="text-sm text-gray-300">DH remains secure for practical applications</p>
+            <div class="mt-2 text-xs text-green-400">Quantum threat: Limited</div>
+        </div>
+
+        <!-- Transition Phase Card -->
+        <div 
+            @click="selectYear(2030)" 
+            :class="{ 'border-yellow-500': selectedYear === 2030 }"
+            class="bg-gray-800 rounded-lg p-6 cursor-pointer hover:bg-gray-700 transition-colors border-2 border-transparent">
+            <h3 class="font-semibold mb-2">Transition Phase (2030)</h3>
+            <p class="text-sm text-gray-300">Begin migration to quantum-resistant algorithms</p>
+            <div class="mt-2 text-xs text-yellow-400">Quantum threat: Growing</div>
+        </div>
+
+        <!-- Critical Phase Card -->
+        <div 
+            @click="selectYear(2035)" 
+            :class="{ 'border-red-500': selectedYear === 2035 }"
+            class="bg-gray-800 rounded-lg p-6 cursor-pointer hover:bg-gray-700 transition-colors border-2 border-transparent">
+            <h3 class="font-semibold mb-2">Critical Phase (2035+)</h3>
+            <p class="text-sm text-gray-300">DH considered cryptographically broken</p>
+            <div class="mt-2 text-xs text-red-400">Quantum threat: Critical</div>
+        </div>
+    </div>
+
+    <!-- Status Details Card -->
+    <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+        <h2 class="text-xl font-semibold mb-4">Security Status for Year <span x-text="selectedYear"></span></h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Technical Details -->
+            <div class="space-y-4">
+                <div class="p-4 bg-gray-700 rounded-lg">
+                    <h3 class="font-semibold mb-2">Technical Details</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li>• Status: <span x-text="getCurrentStatus().status"></span></li>
+                        <li>• Max Breakable: <span x-text="getCurrentStatus().maxBits"></span></li>
+                        <li>• Threat Level: <span x-text="getCurrentStatus().quantumThreat"></span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Recommendations -->
+            <div class="space-y-4">
+                <div class="p-4 bg-gray-700 rounded-lg">
+                    <h3 class="font-semibold mb-2">Recommendations</h3>
+                    <ul class="space-y-2 text-sm">
+                        <template x-for="rec in getCurrentStatus().recommendations" :key="rec">
+                            <li x-text="'• ' + rec"></li>
+                        </template>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function quantumTimeline() {
+    return {
+        selectedYear: 2024,
+        chart: null,
+        timelineData: Array.from({ length: 16 }, (_, i) => ({
+            year: 2024 + i,
+            quantumBits: Math.min(Math.floor(4 * Math.pow(2, i/2)), 2048),
+            classicalSecurity: Math.min(256, Math.floor(32 * Math.pow(1.2, i)))
+        })),
+        securityStatus: {
+            2024: {
+                status: "Secure",
+                maxBits: "4-6 bits",
+                quantumThreat: "Experimental",
+                recommendations: ["Plan ahead", "Monitor progress", "Assess risks"]
+            },
+            2030: {
+                status: "Warning",
+                maxBits: "16-20 bits",
+                quantumThreat: "Growing",
+                recommendations: ["Start migration", "Implement crypto-agility", "Test alternatives"]
+            },
+            2035: {
+                status: "Critical",
+                maxBits: "32-40 bits",
+                quantumThreat: "Severe",
+                recommendations: ["Complete migration", "Use post-quantum crypto", "Remove legacy systems"]
+            }
+        },
+        init() {
+            this.initChart();
+        },
+        initChart() {
+            const ctx = document.getElementById('timelineChart').getContext('2d');
+            this.chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: this.timelineData.map(d => d.year),
+                    datasets: [{
+                        label: 'Max Breakable DH Bits',
+                        data: this.timelineData.map(d => d.quantumBits),
+                        borderColor: '#ef4444',
+                        borderWidth: 2,
+                        tension: 0.1
+                    }, {
+                        label: 'Classical Security Level',
+                        data: this.timelineData.map(d => d.classicalSecurity),
+                        borderColor: '#22c55e',
+                        borderWidth: 2,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#fff'
+                            }
+                        }
+                    }
+                }
+            });
+        },
+        selectYear(year) {
+            this.selectedYear = year;
+        },
+        getCurrentStatus() {
+            if (this.selectedYear >= 2035) return this.securityStatus[2035];
+            if (this.selectedYear >= 2030) return this.securityStatus[2030];
+            return this.securityStatus[2024];
+        }
+    }
+}
+</script>
